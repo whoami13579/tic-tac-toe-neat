@@ -6,15 +6,15 @@ class Piece:
         # image_path = "/home/chu/Code/tic-tac-toe-neat/tic_tac_toe/assets/"
         image_path = "/Users/mba/Code/tic-tac-toe-neat/tic_tac_toe/assets/"
         image_path += "o.png" if circle else "x.png"
-        self.image = pygame.image.load(image_path)
-        self.image = pygame.transform.scale(self.image, ((width // 3), (height // 3)))
+        self.__image = pygame.image.load(image_path)
+        self.__image = pygame.transform.scale(self.__image, ((width // 3), (height // 3)))
         
-        self.x = x
-        self.y = y
+        self.__x = x
+        self.__y = y
 
-        self.width = width
-        self.height = height
+        self.__width = width
+        self.__height = height
     
 
     def draw(self, window: pygame.Surface):
-        window.blit(self.image, (self.width // 3 * self.x, self.height // 3 * self.y))
+        window.blit(self.__image, (self.__width // 3 * self.__x, self.__height // 3 * self.__y))

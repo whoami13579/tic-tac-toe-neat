@@ -22,7 +22,7 @@ class TicTacToeGame:
                     run = False
                     break
 
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN and self.game.getRun():
                     self.game.addPiece()
             
             self.game.draw()
