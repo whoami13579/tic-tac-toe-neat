@@ -2,15 +2,19 @@ import pygame
 
 
 class Piece:
-    def __init__(self, circle:bool, x:int, y:int):
-        image_path: str = "/home/chu/Code/tic-tac-toe-neat/tic_tac_toe/assets/"
+    def __init__(self, circle:bool, x:int, y:int, width: int, height: int):
+        # image_path = "/home/chu/Code/tic-tac-toe-neat/tic_tac_toe/assets/"
+        image_path = "/Users/mba/Code/tic-tac-toe-neat/tic_tac_toe/assets/"
         image_path += "o.png" if circle else "x.png"
-        self.image:pygame.surface = pygame.image.load(image_path).convert()
+        self.image = pygame.image.load(image_path)
+        self.image = pygame.transform.scale(self.image, ((width // 3), (height // 3)))
         
-        self.x: int = x
-        self.y: int = y
+        self.x = x
+        self.y = y
+
+        self.width = width
+        self.height = height
     
 
     def draw(self, window: pygame.Surface):
-        image:pygame.Surface = self.image
-        window.blit(image, (0, 0))
+        window.blit(self.image, (self.width // 3 * self.x, self.height // 3 * self.y))

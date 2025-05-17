@@ -4,25 +4,32 @@ import neat
 import os
 import pickle
 
+
+WIDTH, HEIGHT = 600, 600
+
 class TicTacToeGame:
-    def __init__(self, window: pygame.Surface, width: int, height: int):
-        self.game: Game = Game()
-        self.window: pygame.Surface = window
-        self.width: int = width
-        self.height: int = height
-
-
-width, height = 600, 600
-window = pygame.display.set_mode((width, height))
-game = Game(window, width, height)
-game.draw()
-run = True
-while run:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-            break
+    def __init__(self, width: int, height: int):
+        self.width = width
+        self.height = height
+        self.window = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.game = Game(self.window, WIDTH, HEIGHT)
     
-    game.draw()
+    def testGame(self):
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    break
 
-pygame.quit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.game.addPiece()
+            
+            self.game.draw()
+
+        pygame.quit()
+
+
+if __name__ == "__main__":
+    ticTacToeGame = TicTacToeGame(WIDTH, HEIGHT)
+    ticTacToeGame.testGame()
