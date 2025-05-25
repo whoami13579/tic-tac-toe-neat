@@ -17,17 +17,35 @@ class Game:
         self.__circle: bool = True
         self.__bitBoard = [[0 for i in range(3)] for j in range(3)]
         self.__run = True
+    
+    def reset(self):
+        for _ in self.__pieces:
+            del self.__pieces[0]
+        self.__circle: bool = True
+
+        for i in range(3):
+            for j in range(3):
+                self.__bitBoard[i][j] = 0
+
+        self.__run = True
+        self.__window.fill((0, 0, 0))
+        print("reset")
+
 
     def getRun(self)->bool:
         return self.__run
     
+    def getCircle(self)->bool:
+        return self.__circle
+
     def draw(self):
         self.__board.draw(self.__window)
 
         for piece in self.__pieces:
             piece.draw(self.__window)
         
-        pygame.display.flip()
+        pygame.display.update()
+        # pygame.display.flip()
     
     def __getPosition(self) -> list[int, int]:
         current_pos = pygame.mouse.get_pos()
@@ -35,6 +53,31 @@ class Game:
         converted_y = int(current_pos[1] / (self.__height // 3))
 
         return converted_x, converted_y
+
+    
+    def addPieceByNumber(self, number: int)->int:
+        """
+        This function attempts to add a new piece to the game board. It returns:
+
+        - 0 if the piece could not be added (failure).
+        - 1 if the piece was successfully added to the board.
+        - 2 if the game ends with a "O" win.
+        - 3 if the game ends with an "X" win.
+        - 4 if the game ends in a draw.
+        """
+
+        x = number // 3
+        y = number % 3
+
+        if self.__bitBoard[x][y] != 0:
+            return 0
+
+        self.__bitBoard[x][y] = 1 if self.__circle else -1
+        self.__pieces.append(Piece(self.__circle, x, y, self.__width, self.__height))
+        self.__circle = not self.__circle
+        
+        return self.check()
+        
 
     def addPiece(self)->int:
         """
@@ -100,3 +143,12 @@ class Game:
         self.__run = False
         print("Draw")
         return 4
+
+    def get_bitBoardList(self)->list[int]:
+        bitBoardList = []
+        for i in range(3):
+            for j in range(3):
+                bitBoardList.append(self.__bitBoard[i][j])
+        
+        bitBoardList.append(int(self.__circle))
+        return bitBoardList
