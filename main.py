@@ -110,7 +110,7 @@ class TicTacToeGame:
         genome1.fitness += 10 if result == 4 else 0
         genome2.fitness += 10 if result == 4 else 0
 
-    def test_ai(self, genome, config):
+    def play_with_ai(self, genome, config):
         net = neat.nn.FeedForwardNetwork.create(genome, config)
 
         while self.__game.getRun():
@@ -195,12 +195,12 @@ def run_neat(config: neat.Config):
         pickle.dump(winner, f)
 
 
-def test_ai(config):
+def play_with_ai(config):
     with open("best.pickle", "rb") as f:
         winner = pickle.load(f)
 
     game = TicTacToeGame(WIDTH, HEIGHT)
-    game.test_ai(winner, config)
+    game.play_with_ai(winner, config)
 
 
 if __name__ == "__main__":
@@ -214,4 +214,4 @@ if __name__ == "__main__":
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_path)
     # run_neat(config)
-    test_ai(config)
+    play_with_ai(config)
